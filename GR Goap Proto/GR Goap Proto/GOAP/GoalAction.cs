@@ -1,4 +1,6 @@
-﻿namespace GR_Goap_Proto.GOAP
+﻿using GR_Goap_Proto.Characters;
+
+namespace GR_Goap_Proto.GOAP
 {
     public class GoalAction
     {
@@ -21,7 +23,20 @@
             _effectsRemovedByAction = new();
         }
 
-        public bool IsAchievable()
+        /// <summary>
+        /// Determines if this action is available under the current world state conditions
+        /// </summary>
+        /// <remarks>This checks is available to be performed, should an appropriate character attempt to do so.</remarks>        
+        public bool IsAchievableInWorld()
+        {
+            return true; //pending
+        }
+        /// <summary>
+        /// Determines if the provided character is capble of performing the action.
+        /// </summary>
+        /// <remarks>This assumes that the actions is available to be performed in the current world states,
+        /// and only checks the characters capability of perfroming it.</remarks>
+        public bool IsAchievableByCharacter(Character character)
         {
             return true; //pending
         }
