@@ -16,7 +16,8 @@ namespace GR_Goap_Proto.Simulator
 
         public void RunSimulation()
         {
-            ForwardGoalActionPlanner planner = new ForwardGoalActionPlanner();
+            //ForwardGoalActionPlanner planner = new ForwardGoalActionPlanner();
+            BackwardsGoalActionPlanner planner = new BackwardsGoalActionPlanner();
 
             Character tom = CharacterLibrary.Tom();
 
@@ -31,7 +32,7 @@ namespace GR_Goap_Proto.Simulator
 
 
             StatesCollection endGoals = new StatesCollection();
-            endGoals.AddState(KeyLibrary.GoalForNeeds.Satiety, 1);
+            endGoals.AddState(KeyLibrary.GoalForNeeds.Satiety, 5);
 
 
             StatesCollection startingStates = new StatesCollection();

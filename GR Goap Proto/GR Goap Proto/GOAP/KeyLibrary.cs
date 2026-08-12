@@ -46,6 +46,10 @@
             public const string Shop = "NeedShop";
             public const string Assayist = "NeedAssayist";
         }
+        public struct CharacterTrait
+        {
+            public const string Lawless = "Lawless";
+        }
         public struct CharacterAt
         {
             public const string Mine = "CharAtMine";

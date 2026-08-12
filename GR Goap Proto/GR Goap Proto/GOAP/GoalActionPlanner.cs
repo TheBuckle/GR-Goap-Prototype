@@ -40,10 +40,13 @@ namespace GR_Goap_Proto.GOAP
             }
             return true;
         }
-        protected List<GoalAction> ActionSubset(List<GoalAction> actions, GoalAction actionToRemove)
+        protected List<GoalAction> ActionSubset(List<GoalAction> actions, GoalAction[] actionsToRemove)
         {
             List<GoalAction> newActionSubset = new(actions);
-            newActionSubset.Remove(actionToRemove);
+            foreach(var a  in actionsToRemove)
+            {
+                newActionSubset.Remove(a);
+            }
             return newActionSubset;
         }
 

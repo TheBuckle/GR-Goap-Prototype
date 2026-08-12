@@ -37,7 +37,7 @@ namespace GR_Goap_Proto.GOAP
                     }
                     else
                     {
-                        List<GoalAction> subsetOfActions = ActionSubset(usableActions, action);
+                        List<GoalAction> subsetOfActions = ActionSubset(usableActions, new GoalAction[] { action });
                         bool found = BuildGraph(newNode, leaves, subsetOfActions, targetStates);
                         if (found)
                         {

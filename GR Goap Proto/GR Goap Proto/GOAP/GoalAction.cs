@@ -4,20 +4,22 @@ namespace GR_Goap_Proto.GOAP
 {
     public class GoalAction
     {
-        private string _name;
-        private StatesCollection _requiredPreconditionsForAction;
-        private StatesCollection _effectsAppliedByAction;
+        private readonly string _name;
+        private readonly StatesCollection _requiredPreconditionsForAction;
+        private readonly StatesCollection _effectsAppliedByAction;
+        private readonly float _totalEffects;
 
         public string Name { get => _name; }
         public int Cost { get; set; } //need to create a cost class to handle the complexities of cost
+        public float TotalEffects { get => _totalEffects;}
 
-        public GoalAction(string name)
+        public GoalAction(string name, StatesCollection preconditions, StatesCollection effects)
         {
+            _requiredPreconditionsForAction = preconditions;
+            _effectsAppliedByAction = effects;
             _name = name;
-            _requiredPreconditionsForAction = new();
-            _effectsAppliedByAction = new();            
+            _totalEffects = _effectsAppliedByAction.CalculateTotalEffectsOfAllStates();
         }
-
         /// <summary>
         /// Determines if this action is available under the current world state conditions
         /// </summary>
@@ -36,23 +38,24 @@ namespace GR_Goap_Proto.GOAP
             return true; //pending
         }
 
-        public void InsertEffects(StatesCollection statesApplied)//needs to be better
-        {
-            _effectsAppliedByAction = statesApplied;
-        }
-        public void InsertPreconditions(StatesCollection precludedStates)//needs to be better
-        {
-            _requiredPreconditionsForAction = precludedStates;
-        }
-
         public bool PreconditionStatesAreMet(StatesCollection stateToCheck)
         {
             return stateToCheck.DoesAchieveAll(_requiredPreconditionsForAction);
         }
-
+        public float GetTotalGoalEffectForStates(StatesCollection stateToCheck)
+        {
+            return _effectsAppliedByAction.GetTotalEffectImprovementOfTargetStates(stateToCheck);
+            //return stateToCheck.GetTotalEffectImprovementOfTargetStates(_effectsAppliedByAction);
+        }
         public void ApplyEffectsToState(StatesCollection stateToReceiveEffects)
         {
             stateToReceiveEffects.AddStatesAll(_effectsAppliedByAction);
         }
+
+        public StatesCollection GetCopyOfPreconditions()
+        {
+            return new StatesCollection(_requiredPreconditionsForAction);
+        }
+        
     }
 }
