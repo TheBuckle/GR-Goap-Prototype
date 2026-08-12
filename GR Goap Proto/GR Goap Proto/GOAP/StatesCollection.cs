@@ -70,20 +70,14 @@
         /// <summary></summary>
         /// <remarks>
         /// </remarks>
-        public bool DoesContainAll(IEnumerable<string> stateKeys)
+        public bool DoesAchieveAll(StatesCollection stateToCheck)
         {
-            foreach (var k in stateKeys)
+            foreach (var k in stateToCheck.GetCopyOfCurrentKeys())
             {
-                if (!_managedStateKeys.ContainsKey(k)) return false;
-            }
-            return true;
-        }
-
-        public bool DoesNotContainAll(IEnumerable<string> stateKeys)
-        {
-            foreach (var k in stateKeys)
-            {
-                if (!_managedStateKeys.ContainsKey(k)) return false;
+                if (!_managedStateKeys.TryGetValue(k, out var internalValue)) return false;
+                if (stateToCheck.TryGetValue(k, out var checkingValue) 
+                            && internalValue < checkingValue)
+                    return false;                
             }
             return true;
         }

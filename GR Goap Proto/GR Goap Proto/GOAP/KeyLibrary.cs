@@ -1,16 +1,16 @@
 ﻿namespace GR_Goap_Proto.GOAP
 {
-    public class StateKeyLibrary
+    public class KeyLibrary
     {
         public const string Open = "Open";
 
-        public struct Goal
+        public struct GoalForNeeds
         {
-            public const string SatisfyHunger = "SatisfyHunger";
-            public const string BeEntertained = "BeEntertained";
-            public const string GoDrinking = "GoDrinking";
-            public const string Gamble = "Gamble";
-            public const string Prospect = "Prospect";
+            public const string Satiety = "Satiety";
+            public const string Happiness = "Happiness";
+            public const string Intoxication = "Intoxication";
+            public const string Hydration = "Hydration";
+            public const string Enrichment = "Enrichment";
         }
         public struct Inventory
         {

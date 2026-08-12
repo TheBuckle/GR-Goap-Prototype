@@ -1,3 +1,5 @@
+using GR_Goap_Proto.Simulator;
+
 namespace GR_Goap_Proto
 {
     public partial class frmMain : Form
@@ -5,6 +7,12 @@ namespace GR_Goap_Proto
         public frmMain()
         {
             InitializeComponent();
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            var sim = new Simulation();
+            sim.RunSimulation();
         }
     }
 }

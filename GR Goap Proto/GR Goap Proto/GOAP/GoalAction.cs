@@ -6,9 +6,7 @@ namespace GR_Goap_Proto.GOAP
     {
         private string _name;
         private StatesCollection _requiredPreconditionsForAction;
-        private StatesCollection _precludingPreconditionsForAction;
         private StatesCollection _effectsAppliedByAction;
-        private StatesCollection _effectsRemovedByAction;
 
         public string Name { get => _name; }
         public int Cost { get; set; } //need to create a cost class to handle the complexities of cost
@@ -16,11 +14,8 @@ namespace GR_Goap_Proto.GOAP
         public GoalAction(string name)
         {
             _name = name;
-
             _requiredPreconditionsForAction = new();
-            _precludingPreconditionsForAction = new();
-            _effectsAppliedByAction = new();
-            _effectsRemovedByAction = new();
+            _effectsAppliedByAction = new();            
         }
 
         /// <summary>
@@ -41,26 +36,22 @@ namespace GR_Goap_Proto.GOAP
             return true; //pending
         }
 
-        public void InsertEffects(StatesCollection statesApplied, StatesCollection statesRemoved)//needs to be better
+        public void InsertEffects(StatesCollection statesApplied)//needs to be better
         {
             _effectsAppliedByAction = statesApplied;
-            _effectsRemovedByAction = statesRemoved;
         }
-        public void InsertPreconditions(StatesCollection requiredStates, StatesCollection precludedStates)//needs to be better
+        public void InsertPreconditions(StatesCollection precludedStates)//needs to be better
         {
-            _requiredPreconditionsForAction = requiredStates;
-            _precludingPreconditionsForAction = precludedStates;
+            _requiredPreconditionsForAction = precludedStates;
         }
 
         public bool PreconditionStatesAreMet(StatesCollection stateToCheck)
         {
-            return stateToCheck.DoesContainAll(_requiredPreconditionsForAction.GetCopyOfCurrentKeys()) &&
-                    stateToCheck.DoesNotContainAll(_precludingPreconditionsForAction.GetCopyOfCurrentKeys());
+            return stateToCheck.DoesAchieveAll(_requiredPreconditionsForAction);
         }
 
         public void ApplyEffectsToState(StatesCollection stateToReceiveEffects)
         {
-            stateToReceiveEffects.RemoveStatesAll(_effectsRemovedByAction);
             stateToReceiveEffects.AddStatesAll(_effectsAppliedByAction);
         }
     }
