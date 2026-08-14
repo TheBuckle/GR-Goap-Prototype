@@ -1,4 +1,5 @@
 ﻿
+
 namespace GR_Goap_Proto.GOAP
 {
     public class StatesCollection
@@ -82,28 +83,6 @@ namespace GR_Goap_Proto.GOAP
             }
             return true;
         }
-        public float GetTotalEffectImprovementOfTargetStates(StatesCollection stateToCheck)
-        {
-            float improvement = 0;
-            foreach (var k in stateToCheck.GetCopyOfCurrentKeys())
-            {
-                //if it has the key, is the effect value positive
-                if (_managedStateKeys.TryGetValue(k, out var internalValue))
-                {
-                    improvement += internalValue;
-                }
-            }
-            return improvement;
-        }
-        public float CalculateTotalEffectsOfAllStates()
-        {
-            float improvement = 0;
-            foreach (var k in _managedStateKeys.Keys)
-            {
-                improvement += _managedStateKeys[k];
-            }
-            return improvement;
-        }
         public void RemoveStatesAll(StatesCollection effectsRemovedByAction)
         {
             foreach(var key in effectsRemovedByAction.GetCopyOfCurrentKeys())
@@ -138,7 +117,40 @@ namespace GR_Goap_Proto.GOAP
             _managedStateKeys.TryGetValue(stateKey, out int currentValue);
             _managedStateKeys[stateKey] = currentValue + valueAdded;
         }
-
         
+        public float GetTotalEffectImprovementOfTargetStates(StatesCollection stateToCheck)
+        {
+            float improvement = 0;
+            foreach (var k in stateToCheck.GetCopyOfCurrentKeys())
+            {
+                //if it has the key, is the effect value positive
+                if (_managedStateKeys.TryGetValue(k, out var internalValue))
+                {
+                    improvement += internalValue;
+                }
+            }
+            return improvement;
+        }
+        public float CalculateTotalEffectsOfAllStates()
+        {
+            float improvement = 0;
+            foreach (var k in _managedStateKeys.Keys)
+            {
+                improvement += _managedStateKeys[k];
+            }
+            return improvement;
+        }
+        public bool EffectsAchievePreconditions(StatesCollection statesCollection)
+        {
+            //check all keys in the managed states and see if they match the provided states collection
+            foreach(var k in statesCollection.GetCopyOfCurrentKeys())
+            {
+                if (!_managedStateKeys.ContainsKey(k)) return false;
+
+
+            }
+
+            return true;
+        }
     }
 }

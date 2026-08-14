@@ -16,9 +16,8 @@ namespace GR_Goap_Proto.GOAP
             List<GoalAction> usableActions = FindActionsUsableByCharacter(actingCharacter, availableActions);
 
             List<PlanningNode> leaves = new();
-            PlanningNode startNode = new PlanningNode(null, 0, startingStates, null);
 
-            bool success = BuildGraph(startNode, leaves, usableActions, endGoals);
+            bool success = BuildGraph(leaves, usableActions, startingStates, endGoals);
 
             if (!success) return false;
             if (leaves.Count == 0) return false;
@@ -29,8 +28,8 @@ namespace GR_Goap_Proto.GOAP
 
             return true;
         }
-        protected abstract bool BuildGraph(PlanningNode nodeParent, List<PlanningNode> leaves, 
-                                            List<GoalAction> usableActions, StatesCollection targetStates);
+        protected abstract bool BuildGraph(List<PlanningNode> actionPathLeaves, List<GoalAction> usableActions,
+                                            StatesCollection startingStates, StatesCollection endGoals);
         
         protected bool GoalAchieved(StatesCollection goals, StatesCollection state)
         {
@@ -40,7 +39,7 @@ namespace GR_Goap_Proto.GOAP
             }
             return true;
         }
-        protected List<GoalAction> ActionSubset(List<GoalAction> actions, GoalAction[] actionsToRemove)
+        protected List<GoalAction> CreateActionSubset(List<GoalAction> actions, GoalAction[] actionsToRemove)
         {
             List<GoalAction> newActionSubset = new(actions);
             foreach(var a  in actionsToRemove)
@@ -88,6 +87,35 @@ namespace GR_Goap_Proto.GOAP
                 if (pn.Cost < cheapest.Cost) cheapest = pn;
             }
             return cheapest;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usableActions">A list of actions to be evaluated</param>
+        /// <param name="preconditions">The goals that the actions effects must achieve</param>
+        /// <param name="queuedActionsThatAchievePreconditions"></param>
+        /// <param name="usedActions"></param>
+        /// <returns></returns>
+        protected bool TryQueueAllActionsThatEffectTargetPreconditions(List<GoalAction> usableActions, StatesCollection preconditions,
+                            out PriorityQueue<GoalAction, float> queuedActionsThatAchievePreconditions,
+                            out List<GoalAction> usedActions)
+        {
+            queuedActionsThatAchievePreconditions = new();
+            usedActions = new();
+
+            foreach (var action in usableActions)
+            {
+                var effectOfThisAction = action.GetTotalGoalEffectForTargetStates(preconditions);
+                if (effectOfThisAction > 0)
+                {
+                    queuedActionsThatAchievePreconditions.Enqueue(action, effectOfThisAction);
+                    usedActions.Add(action);
+                }
+            }
+
+            if (queuedActionsThatAchievePreconditions.Count == 0) return false;
+            return true;
         }
     }
 }

@@ -7,6 +7,16 @@ namespace GR_Goap_Proto
         public frmMain()
         {
             InitializeComponent();
+
+            PopulateCharacterList();
+
+
+
+        }
+
+        private void PopulateCharacterList()
+        {
+            
         }
 
         private void btnRun_Click(object sender, EventArgs e)

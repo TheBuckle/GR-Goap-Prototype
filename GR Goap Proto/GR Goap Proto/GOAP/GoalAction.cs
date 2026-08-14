@@ -42,7 +42,7 @@ namespace GR_Goap_Proto.GOAP
         {
             return stateToCheck.DoesAchieveAll(_requiredPreconditionsForAction);
         }
-        public float GetTotalGoalEffectForStates(StatesCollection stateToCheck)
+        public float GetTotalGoalEffectForTargetStates(StatesCollection stateToCheck)
         {
             return _effectsAppliedByAction.GetTotalEffectImprovementOfTargetStates(stateToCheck);
             //return stateToCheck.GetTotalEffectImprovementOfTargetStates(_effectsAppliedByAction);
@@ -56,6 +56,9 @@ namespace GR_Goap_Proto.GOAP
         {
             return new StatesCollection(_requiredPreconditionsForAction);
         }
-        
+        public StatesCollection GetCopyOfEffects()
+        {
+            return new StatesCollection(_effectsAppliedByAction);
+        }
     }
 }

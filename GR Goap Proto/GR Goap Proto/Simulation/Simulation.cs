@@ -17,7 +17,7 @@ namespace GR_Goap_Proto.Simulator
         public void RunSimulation()
         {
             //ForwardGoalActionPlanner planner = new ForwardGoalActionPlanner();
-            BackwardsGoalActionPlanner planner = new BackwardsGoalActionPlanner();
+            SimpleBackwardsGoalActionPlanner planner = new SimpleBackwardsGoalActionPlanner();
 
             Character tom = CharacterLibrary.Tom();
 
@@ -42,6 +42,10 @@ namespace GR_Goap_Proto.Simulator
             if (planner.MakePlan(tom, actions, endGoals, startingStates, out var actionPlan))
             {
                 var a = 1;//dummy code for break point
+            }
+            else
+            {
+                var a = 1;
             }
 
 

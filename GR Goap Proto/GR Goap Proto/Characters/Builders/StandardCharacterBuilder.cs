@@ -8,6 +8,7 @@ namespace GR_Goap_Proto.Characters.Builders
         {
             StatesCollection states = new StatesCollection();
             states.AddState(KeyLibrary.Inventory.HasMoney, 10);
+            states.AddState(KeyLibrary.Inventory.HasFood, 10);
             return states;
         }
 
