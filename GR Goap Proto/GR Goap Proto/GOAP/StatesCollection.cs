@@ -93,11 +93,11 @@ namespace GR_Goap_Proto.GOAP
                 }                
             }
         }
-        public void AddStatesAll(StatesCollection effectsAppliedByAction)
+        public void AddStatesAll(StatesCollection statesToAdd)
         {
-            foreach (var key in effectsAppliedByAction.GetCopyOfCurrentKeys())
+            foreach (var key in statesToAdd.GetCopyOfCurrentKeys())
             {
-                if (effectsAppliedByAction.TryGetValue(key, out var value))
+                if (statesToAdd.TryGetValue(key, out var value))
                 {
                     Add(key, value);
                 }
@@ -140,16 +140,23 @@ namespace GR_Goap_Proto.GOAP
             }
             return improvement;
         }
-        public bool EffectsAchievePreconditions(StatesCollection statesCollection)
+        public bool CanAchieveStates(StatesCollection statesCollection)
         {
             //check all keys in the managed states and see if they match the provided states collection
             foreach(var k in statesCollection.GetCopyOfCurrentKeys())
             {
-                if (!_managedStateKeys.ContainsKey(k)) return false;
-
-
+                if (_managedStateKeys.ContainsKey(k))
+                {
+                    if(statesCollection.TryGetValue(k, out var targetVal))
+                    {
+                        if (_managedStateKeys[k] <  targetVal) return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
             }
-
             return true;
         }
     }

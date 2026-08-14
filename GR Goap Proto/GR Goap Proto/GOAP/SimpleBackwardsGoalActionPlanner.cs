@@ -42,7 +42,7 @@ namespace GR_Goap_Proto.GOAP
                 
                 var preconditions = actionWithHighestEffect.GetCopyOfPreconditions();
 
-                if (startingStates.EffectsAchievePreconditions(preconditions))// preconditions.DoesAchieveAll(startingStates))
+                if (startingStates.CanAchieveStates(preconditions))
                 {//path complete
                     PlanningNode lastNode = new PlanningNode(previousNode, actionWithHighestEffect.Cost, startingStates, actionWithHighestEffect);
                     leaves.Add(lastNode);

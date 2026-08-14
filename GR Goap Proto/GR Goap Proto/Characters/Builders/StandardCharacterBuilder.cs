@@ -7,8 +7,8 @@ namespace GR_Goap_Proto.Characters.Builders
         public virtual StatesCollection GetBeliefs()
         {
             StatesCollection states = new StatesCollection();
-            states.AddState(KeyLibrary.Inventory.HasMoney, 10);
-            states.AddState(KeyLibrary.Inventory.HasFood, 10);
+            states.AddState(KeyLibrary.Inventory.HasMoney, 0);
+            states.AddState(KeyLibrary.Inventory.HasFood, 0);
             return states;
         }
 

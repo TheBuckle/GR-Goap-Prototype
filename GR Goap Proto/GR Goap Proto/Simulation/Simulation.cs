@@ -37,7 +37,8 @@ namespace GR_Goap_Proto.Simulator
 
             StatesCollection startingStates = new StatesCollection();
             startingStates.AddState(KeyLibrary.GoalForNeeds.Satiety, 0);
-
+            startingStates.AddStatesAll(tom.Beliefs);
+            startingStates.AddStatesAll(tom.Skills);
 
             if (planner.MakePlan(tom, actions, endGoals, startingStates, out var actionPlan))
             {
