@@ -7,18 +7,21 @@ namespace GR_Goap_Proto.GOAP
         private readonly string _name;
         private readonly StatesCollection _requiredPreconditionsForAction;
         private readonly StatesCollection _effectsAppliedByAction;
+        private readonly StatesCollection _requiredCharacterSkills;
         private readonly float _totalEffects;
 
         public string Name { get => _name; }
         public int Cost { get; set; } //need to create a cost class to handle the complexities of cost
         public float TotalEffects { get => _totalEffects;}
 
-        public GoalAction(string name, StatesCollection preconditions, StatesCollection effects)
+        public GoalAction(string name, StatesCollection preconditions, StatesCollection effects, StatesCollection requiredSkills)
         {
             _requiredPreconditionsForAction = preconditions;
             _effectsAppliedByAction = effects;
             _name = name;
             _totalEffects = _effectsAppliedByAction.CalculateTotalEffectsOfAllStates();
+            _requiredCharacterSkills = requiredSkills;
+
         }
         /// <summary>
         /// Determines if this action is available under the current world state conditions
@@ -35,7 +38,7 @@ namespace GR_Goap_Proto.GOAP
         /// and only checks the characters capability of perfroming it.</remarks>
         public bool IsAchievableByCharacter(Character character)
         {
-            return true; //pending
+            return character.Skills.DoesAchieveAll(_requiredCharacterSkills);
         }
 
         public bool PreconditionStatesAreMet(StatesCollection stateToCheck)

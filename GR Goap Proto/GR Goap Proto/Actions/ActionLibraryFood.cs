@@ -2,7 +2,7 @@
 
 namespace GR_Goap_Proto.Actions
 {
-    public class ActionLibrary_Food
+    public class ActionLibraryFood
     {
         public static GoalAction Eat()
         {
@@ -12,7 +12,7 @@ namespace GR_Goap_Proto.Actions
             StatesCollection effects = new StatesCollection();
             effects.AddState(KeyLibrary.GoalForNeeds.Satiety, 5);
 
-            GoalAction eatFood = new GoalAction("Eat Food", preconditions, effects);
+            GoalAction eatFood = new GoalAction("Eat Food", preconditions, effects, new StatesCollection());
             eatFood.Cost = 1;
             return eatFood;
         }
@@ -21,12 +21,11 @@ namespace GR_Goap_Proto.Actions
         {
             StatesCollection preconditions = new StatesCollection();
             preconditions.AddState(KeyLibrary.CharacterTrait.Lawless, 1);
-            //preconditions.AddState(KeyLibrary.Inventory.HasMoney, 0);
 
             StatesCollection effects = new StatesCollection();
             effects.AddState(KeyLibrary.Inventory.HasFood, 1);
 
-            GoalAction eatFood = new GoalAction("Steal Food", preconditions, effects);
+            GoalAction eatFood = new GoalAction("Steal Food", preconditions, effects, new StatesCollection());
             eatFood.Cost = 1;
 
             return eatFood;
@@ -40,7 +39,7 @@ namespace GR_Goap_Proto.Actions
             StatesCollection effects = new StatesCollection();
             effects.AddState(KeyLibrary.Inventory.HasFood, 1);
 
-            GoalAction eatFood = new GoalAction("Buy Food", preconditions, effects);
+            GoalAction eatFood = new GoalAction("Buy Food", preconditions, effects, new StatesCollection());
             eatFood.Cost = 1;
 
             return eatFood;
@@ -54,7 +53,7 @@ namespace GR_Goap_Proto.Actions
             StatesCollection effects = new StatesCollection();
             effects.AddState(KeyLibrary.Inventory.HasFood, 1);
 
-            GoalAction eatFood = new GoalAction("Forage", preconditions, effects);
+            GoalAction eatFood = new GoalAction("Forage", preconditions, effects, new StatesCollection());
             eatFood.Cost = 4;
 
             return eatFood;
@@ -68,7 +67,10 @@ namespace GR_Goap_Proto.Actions
             StatesCollection effects = new StatesCollection();
             effects.AddState(KeyLibrary.Inventory.HasMeat, 1);
 
-            GoalAction eatFood = new GoalAction("Hunt", preconditions, effects);
+            StatesCollection skills = new StatesCollection();
+            effects.AddState(KeyLibrary.Skills.CanHunt, 1);
+
+            GoalAction eatFood = new GoalAction("Hunt", preconditions, effects, skills);
             eatFood.Cost = 3;
 
             return eatFood;
@@ -82,10 +84,13 @@ namespace GR_Goap_Proto.Actions
             StatesCollection effects = new StatesCollection();
             effects.AddState(KeyLibrary.Inventory.HasMeat, 1);
 
-            GoalAction eatFood = new GoalAction("Fish", preconditions, effects);
+            StatesCollection skills = new StatesCollection();
+            effects.AddState(KeyLibrary.Skills.CanFish, 1);
+
+            GoalAction eatFood = new GoalAction("Fish", preconditions, effects, skills);
             eatFood.Cost = 4;
 
-            return eatFood;
+            return eatFood; 
         }
 
         public static GoalAction Cook()
@@ -96,11 +101,13 @@ namespace GR_Goap_Proto.Actions
             StatesCollection effects = new StatesCollection();
             effects.AddState(KeyLibrary.Inventory.HasFood, 1);
 
-            GoalAction eatFood = new GoalAction("Cook", preconditions, effects);
+            StatesCollection skills = new StatesCollection();
+            effects.AddState(KeyLibrary.Skills.CanCook, 1);
+
+            GoalAction eatFood = new GoalAction("Cook", preconditions, effects, skills);
             eatFood.Cost = 2;
 
             return eatFood;
         }
-
     }
 }

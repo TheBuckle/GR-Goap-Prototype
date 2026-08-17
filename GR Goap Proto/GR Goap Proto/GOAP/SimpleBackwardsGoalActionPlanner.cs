@@ -1,5 +1,4 @@
 ﻿using GR_Goap_Proto.GOAP.Internal;
-using System.DirectoryServices.ActiveDirectory;
 
 namespace GR_Goap_Proto.GOAP
 {
@@ -9,7 +8,7 @@ namespace GR_Goap_Proto.GOAP
                                             StatesCollection startingStates, StatesCollection endGoals)
         {
             //initial dummy seed data
-            GoalAction endGoalAction = new GoalAction("Null Goal Action", endGoals, endGoals);
+            GoalAction endGoalAction = new GoalAction("Null Goal Action", endGoals, endGoals, new StatesCollection());
             PlanningNode endNode = new PlanningNode(null, 0, startingStates, endGoalAction);
             return BuildBackwardsGraph(endNode, actionPathLeaves, usableActions, startingStates);
         }

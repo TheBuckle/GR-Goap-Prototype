@@ -22,13 +22,13 @@ namespace GR_Goap_Proto.Simulator
             Character tom = CharacterLibrary.Tom();
 
             List<GoalAction> actions = new List<GoalAction>();
-            actions.Add(ActionLibrary_Food.Eat());
-            actions.Add(ActionLibrary_Food.BuyFood());
-            actions.Add(ActionLibrary_Food.StealFood());
-            actions.Add(ActionLibrary_Food.Hunt());
-            actions.Add(ActionLibrary_Food.Cook());
-            actions.Add(ActionLibrary_Food.Forage());
-            actions.Add(ActionLibrary_Food.Fish());
+            actions.Add(ActionLibraryFood.Eat());
+            actions.Add(ActionLibraryFood.BuyFood());
+            actions.Add(ActionLibraryFood.StealFood());
+            actions.Add(ActionLibraryFood.Hunt());
+            actions.Add(ActionLibraryFood.Cook());
+            actions.Add(ActionLibraryFood.Forage());
+            actions.Add(ActionLibraryFood.Fish());
 
 
             StatesCollection endGoals = new StatesCollection();
